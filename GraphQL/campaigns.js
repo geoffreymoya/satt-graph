@@ -9,7 +9,8 @@ const typeDefs = gql`
     }
     
     input PromInputFilter {
-      influencer: String!
+      influencer: String
+      campaign_id: String
     }
     
     
@@ -83,9 +84,15 @@ const resolvers = {
             let proms = db.proms.findAll()
             if(!args.input)
                 return proms;
-                 if(args.input.influencer) {
+            if(args.input.influencer) {
+                
                 proms = proms
-          .filter((a) => a.influencer === args.input.influencer)
+                .filter((a) => a.influencer === args.input.influencer)
+            }
+            if(args.input.campaign_id) {
+                
+                proms = proms
+                .filter((a) => a.campaign === args.input.campaign_id)
             }
             return proms        
         },
